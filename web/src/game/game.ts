@@ -13,6 +13,10 @@ export class Game {
         this._isRunning = false;
     }
 
+    private _render() {
+
+    }
+
     private _onRaf(time: number) {
         if (this._isRunning) {
             requestAnimationFrame(this._rafListener);
