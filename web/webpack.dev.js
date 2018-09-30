@@ -20,6 +20,10 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader'
             },
+            {
+                test: /\.(frag)|(vert)$/,
+                loader: 'raw-loader'
+            }
         ],
     },
     plugins: [

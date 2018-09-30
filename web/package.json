@@ -18,7 +18,10 @@
     "url": "https://github.com/maxxporoshin/aero/issues"
   },
   "homepage": "https://github.com/maxxporoshin/aero#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@types/gl-matrix": "^2.4.3",
+    "gl-matrix": "^2.8.1"
+  },
   "devDependencies": {
     "@webpack-cli/init": "^0.1.1",
     "awesome-typescript-loader": "^5.2.1",

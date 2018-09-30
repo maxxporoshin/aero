@@ -1,5 +1,6 @@
-import { Game } from './game';
+import { App } from './app';
 
 (() => {
-    new Game().start();
+    const canvas = <HTMLCanvasElement>document.getElementById('app');
+    new App(canvas);
 })()

@@ -86,15 +86,51 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/game.ts":
-/*!*********************!*\
-  !*** ./src/game.ts ***!
-  \*********************/
+/***/ "./src/game/engine.ts":
+/*!****************************!*\
+  !*** ./src/game/engine.ts ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Game = /** @class */ (function () {\n    function Game() {\n        this._isRunning = false;\n        this._rafListener = this._onRaf.bind(this);\n    }\n    Game.prototype.start = function () {\n        this._isRunning = true;\n        requestAnimationFrame(this._rafListener);\n    };\n    Game.prototype.stop = function () {\n        this._isRunning = false;\n    };\n    Game.prototype._onRaf = function (time) {\n        if (this._isRunning) {\n            requestAnimationFrame(this._rafListener);\n        }\n    };\n    return Game;\n}());\nexports.Game = Game;\n\n\n//# sourceURL=webpack:///./src/game.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Engine = /** @class */ (function () {\n    function Engine(gl, scene) {\n        this._gl = gl;\n        this._scene = scene;\n        gl.clearColor(0, 0, 0, 0);\n    }\n    Engine.prototype.render = function () {\n        var gl = this._gl;\n        gl.clear(gl.COLOR_BUFFER_BIT);\n        this._scene.render();\n    };\n    return Engine;\n}());\nexports.Engine = Engine;\n\n\n//# sourceURL=webpack:///./src/game/engine.ts?");
+
+/***/ }),
+
+/***/ "./src/game/game.ts":
+/*!**************************!*\
+  !*** ./src/game/game.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar engine_1 = __webpack_require__(/*! ./engine */ \"./src/game/engine.ts\");\nvar scene_1 = __webpack_require__(/*! ./scene */ \"./src/game/scene.ts\");\nvar Game = /** @class */ (function () {\n    function Game(gl) {\n        this._isRunning = false;\n        this._rafListener = this._onRaf.bind(this);\n        this._gl = gl;\n        var scene = new scene_1.Scene(gl);\n        this._scene = scene;\n        this._engine = new engine_1.Engine(gl, scene);\n    }\n    Game.prototype.start = function () {\n        this._isRunning = true;\n        requestAnimationFrame(this._rafListener);\n    };\n    Game.prototype.stop = function () {\n        this._isRunning = false;\n    };\n    Game.prototype._render = function () {\n        this._engine.render();\n    };\n    Game.prototype._onRaf = function (time) {\n        this._render();\n        if (this._isRunning) {\n            requestAnimationFrame(this._rafListener);\n        }\n    };\n    return Game;\n}());\nexports.Game = Game;\n\n\n//# sourceURL=webpack:///./src/game/game.ts?");
+
+/***/ }),
+
+/***/ "./src/game/index.ts":
+/*!***************************!*\
+  !*** ./src/game/index.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(/*! ./game */ \"./src/game/game.ts\"));\n\n\n//# sourceURL=webpack:///./src/game/index.ts?");
+
+/***/ }),
+
+/***/ "./src/game/scene.ts":
+/*!***************************!*\
+  !*** ./src/game/scene.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Scene = /** @class */ (function () {\n    function Scene(gl) {\n        this._gl = gl;\n        this._objects = new Set();\n    }\n    Scene.prototype.add = function (object) {\n        this._objects.add(object);\n    };\n    Scene.prototype.delete = function (object) {\n        this._objects.delete(object);\n    };\n    Scene.prototype.render = function () {\n        var gl = this._gl;\n        for (var _i = 0, _a = this._objects; _i < _a.length; _i++) {\n            var object = _a[_i];\n            object.render();\n        }\n    };\n    return Scene;\n}());\nexports.Scene = Scene;\n\n\n//# sourceURL=webpack:///./src/game/scene.ts?");
 
 /***/ }),
 
@@ -106,7 +142,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Ga
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar game_1 = __webpack_require__(/*! ./game */ \"./src/game.ts\");\n(function () {\n    new game_1.Game().start();\n})();\n\n\n//# sourceURL=webpack:///./src/index.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar game_1 = __webpack_require__(/*! ./game */ \"./src/game/index.ts\");\n(function () {\n    new game_1.Game().start();\n})();\n\n\n//# sourceURL=webpack:///./src/index.ts?");
 
 /***/ })
 
