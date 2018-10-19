@@ -3,6 +3,7 @@ import { Renderable } from '../renderable';
 import vertexShaderSrc from './shaders/pad.vert';
 import fragmentShaderSrc from './shaders/pad.frag';
 import { createProgram } from '../../gl';
+import { Vertex } from '../../geometry/vertex';
 
 const vertexData = [
     -1., -1.,
@@ -31,8 +32,10 @@ export class Pad implements Renderable {
             gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexData), gl.STATIC_DRAW);
         }
+        this._height = 20;
+        this._width = 100;
+        this._position = {x: 0, y: 0};
         this._viewModelMatrix = mat4.create();
-        mat4.translate(this._viewModelMatrix, this._viewModelMatrix, [0, 0, -6]);
         this._projectionMatrix = mat4.create();
         const fov = 45 * Math.PI / 180;
         const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
@@ -50,6 +53,28 @@ export class Pad implements Renderable {
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 
+    public setWidth(width: number) {
+        this._width = width;
+    }
+
+    public setHeihgt(height: number) {
+        this._height = height;
+    }
+
+    public setPosition(position: Vertex) {
+        this._position = position;
+    }
+
+    private _updateMatrices() {
+        this._viewModelMatrix = mat4.create();
+        mat4.scale(this._viewModelMatrix, this._viewModelMatrix, [1, 0.1, 1]);
+        mat4.translate(this._viewModelMatrix, this._viewModelMatrix, [0, 0, -6]);
+
+    }
+
+    private _width: number;
+    private _height: number;
+    private _position: Vertex;
     private _viewModelMatrix: mat4;
     private _projectionMatrix: mat4;
     private _gl: WebGLRenderingContext;
